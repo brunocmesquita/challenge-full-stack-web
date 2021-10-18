@@ -1,9 +1,8 @@
 import { Router } from 'express';
+import usersRouter from '@modules/students/routes/students.routes';
 
 const routes = Router();
 
-routes.get('/', (req, res) => {
-  return res.json({ message: 'Hello Dev!' });
-});
+routes.use('/api/users', usersRouter);
 
 export default routes;
