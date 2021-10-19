@@ -1,10 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    users: [],
+    register: false,
     snackbar: {
       show: false,
       text: '',
@@ -25,6 +28,11 @@ export default new Vuex.Store({
     hideSnackbar(state) {
       state.snackbar.show = false;
     },
+    initialize() {
+      axios
+        .get('http://localhost:3333/api/users')
+        .then(res => (this.users = res.data.data));
+    },
   },
   actions: {
     updateUser({ commit }) {
@@ -37,6 +45,5 @@ export default new Vuex.Store({
       commit('showSnackbar', 'Usuário criado');
     },
   },
-
   modules: {},
 });
