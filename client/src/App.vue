@@ -26,12 +26,16 @@
     <v-main>
       <router-view />
     </v-main>
+    <snackbar></snackbar>
   </v-app>
 </template>
 
 <script>
 export default {
   name: 'App',
+  components: {
+    snackbar: require('@/components/shared/Snackbar.vue').default,
+  },
 
   data: () => ({
     //
