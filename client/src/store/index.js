@@ -31,7 +31,10 @@ export default new Vuex.Store({
     initialize(state) {
       axios
         .get('http://localhost:3333/api/users')
-        .then(res => (state.users = res.data.data));
+        .then(res => {
+          state.users = res.data;
+        })
+        .catch(err => console.log(err));
     },
   },
   actions: {
