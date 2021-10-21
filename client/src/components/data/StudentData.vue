@@ -17,7 +17,7 @@
     <template>
       <v-data-table
         :headers="headers"
-        :items="users"
+        :items="$store.state.users"
         sort-by="calories"
         class="elevation-1"
       >
@@ -181,9 +181,7 @@ export default {
   },
   methods: {
     initialize() {
-      axios
-        .get('http://localhost:3333/api/users')
-        .then(res => (this.users = res.data.data));
+      this.$store.commit('initialize');
     },
     editItem(item) {
       this.editedIndex = this.users.indexOf(item);

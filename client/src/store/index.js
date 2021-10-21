@@ -28,10 +28,10 @@ export default new Vuex.Store({
     hideSnackbar(state) {
       state.snackbar.show = false;
     },
-    initialize() {
+    initialize(state) {
       axios
         .get('http://localhost:3333/api/users')
-        .then(res => (this.users = res.data.data));
+        .then(res => (state.users = res.data.data));
     },
   },
   actions: {
@@ -43,6 +43,7 @@ export default new Vuex.Store({
     },
     createUser({ commit }) {
       commit('showSnackbar', 'Usuário criado');
+      commit('initialize');
     },
   },
   modules: {},

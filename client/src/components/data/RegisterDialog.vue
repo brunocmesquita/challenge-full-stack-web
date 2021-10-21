@@ -85,7 +85,7 @@ export default {
           email: this.email,
         })
         .then(() => {
-          this.$store.dispatch('createUser');
+          this.$store.dispatch('createUser'); 
           this.$store.state.register = false;
         })
         .catch(err => console.log(err));
