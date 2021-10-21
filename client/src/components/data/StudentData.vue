@@ -17,8 +17,8 @@
     <template>
       <v-data-table
         :headers="headers"
-        :items="$store.state.users"
-        sort-by="calories"
+        :items="users"
+        sort-by="ra_aluno"
         class="elevation-1"
       >
         <template v-slot:top>
@@ -102,7 +102,7 @@
             </v-dialog>
           </v-toolbar>
         </template>
-        <template v-slot:item.actions="{ item }">
+        <template v-slot:[`item.actions`]="{ item }">
           <v-icon small class="mr-2" @click="editItem(item)">
             mdi-pencil
           </v-icon>
@@ -112,7 +112,7 @@
         </template>
         <template v-slot:no-data>
           <v-btn color="primary" @click="initialize">
-            Reset
+            Carregando dados
           </v-btn>
         </template>
       </v-data-table>
@@ -123,7 +123,7 @@
 <script>
 import axios from 'axios';
 export default {
-  created() {
+  async created() {
     this.initialize();
   },
   data() {
@@ -149,7 +149,7 @@ export default {
         {
           text: 'RA',
           align: 'start',
-          sortable: false,
+          sortable: true,
           value: 'ra_aluno',
         },
         { text: 'Nome', value: 'name' },
@@ -182,6 +182,12 @@ export default {
   methods: {
     initialize() {
       this.$store.commit('initialize');
+      setTimeout(() => {
+        this.listStudents();
+      }, 2000);
+    },
+    listStudents() {
+      return (this.users = this.$store.state.users);
     },
     editItem(item) {
       this.editedIndex = this.users.indexOf(item);
@@ -222,6 +228,8 @@ export default {
           })
           .then(() => {
             this.$store.dispatch('updateUser');
+          })
+          .then(() => {
             this.initialize();
             this.close();
           })
